@@ -1,0 +1,11 @@
+..\obj\ipc.o: E:\Programfiles\Keil\ARM\PACK\rt-thread\rtthread\2.1.1\src\ipc.c
+..\obj\ipc.o: E:\Programfiles\Keil\ARM\PACK\rt-thread\rtthread\2.1.1\include\rtthread.h
+..\obj\ipc.o: .\RTE\RTOS\rtconfig.h
+..\obj\ipc.o: .\RTE\_RTT_Myproject_GLZ\RTE_Components.h
+..\obj\ipc.o: E:\Programfiles\Keil\ARM\PACK\rt-thread\rtthread\2.1.1\include\rtdebug.h
+..\obj\ipc.o: E:\Programfiles\Keil\ARM\PACK\rt-thread\rtthread\2.1.1\include\rtdef.h
+..\obj\ipc.o: E:\Programfiles\Keil\ARM\ARMCC\Bin\..\include\stdarg.h
+..\obj\ipc.o: E:\Programfiles\Keil\ARM\PACK\rt-thread\rtthread\2.1.1\include\rtservice.h
+..\obj\ipc.o: E:\Programfiles\Keil\ARM\PACK\rt-thread\rtthread\2.1.1\include\rtm.h
+..\obj\ipc.o: E:\Programfiles\Keil\ARM\PACK\rt-thread\rtthread\2.1.1\include\rtthread.h
+..\obj\ipc.o: E:\Programfiles\Keil\ARM\PACK\rt-thread\rtthread\2.1.1\include\rthw.h

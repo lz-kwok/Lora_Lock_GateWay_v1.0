@@ -1,0 +1,11 @@
+..\obj\kservice.o: E:\Programfiles\Keil\ARM\PACK\rt-thread\rtthread\2.1.1\src\kservice.c
+..\obj\kservice.o: E:\Programfiles\Keil\ARM\PACK\rt-thread\rtthread\2.1.1\include\rtthread.h
+..\obj\kservice.o: .\RTE\RTOS\rtconfig.h
+..\obj\kservice.o: .\RTE\_RTT_Myproject_GLZ\RTE_Components.h
+..\obj\kservice.o: E:\Programfiles\Keil\ARM\PACK\rt-thread\rtthread\2.1.1\include\rtdebug.h
+..\obj\kservice.o: E:\Programfiles\Keil\ARM\PACK\rt-thread\rtthread\2.1.1\include\rtdef.h
+..\obj\kservice.o: E:\Programfiles\Keil\ARM\ARMCC\Bin\..\include\stdarg.h
+..\obj\kservice.o: E:\Programfiles\Keil\ARM\PACK\rt-thread\rtthread\2.1.1\include\rtservice.h
+..\obj\kservice.o: E:\Programfiles\Keil\ARM\PACK\rt-thread\rtthread\2.1.1\include\rtm.h
+..\obj\kservice.o: E:\Programfiles\Keil\ARM\PACK\rt-thread\rtthread\2.1.1\include\rtthread.h
+..\obj\kservice.o: E:\Programfiles\Keil\ARM\PACK\rt-thread\rtthread\2.1.1\include\rthw.h
