@@ -49,7 +49,7 @@ void _sys_exit(int x)
 //重定义fputc函数 
 int fputc(int ch, FILE *f)
 { 	
-	System.Device.Usart1.WriteData(ch);      
+	System.Device.Usart6.WriteData(ch);      
 	return ch;
 }
 #endif 
@@ -337,11 +337,11 @@ uint8_t *JudgeStr(uint16_t waittime)
 
 	while(--waittime)
 	{
-		delay_ms(1);
-		if(handshake_status == handle_data)//接收到一次数据
+		rt_thread_delay(1);
+		if(handshake_status == handle_data)			//接收到一次数据
 		{
 			handshake_status = handshake_done;
-			delay_ms(100);                 //等待后续接收完成
+			rt_thread_delay(100);                 	//等待后续接收完成
 			
 			data=strstr((const char*)rx2Buff,(const char*)str);
 			Uart2lenth = 0;
@@ -358,11 +358,7 @@ uint8_t *JudgeStr(uint16_t waittime)
 
 void HAL_UART_RxCpltCallback(UART_HandleTypeDef *UartHandle)
 {  
-    if(UartHandle->Instance==USART2){
-		if(Uart2lenth == 0){
-			memset(rx2Buff,0x0,uart_rx_len);
-		}
-		
+    if(UartHandle->Instance==USART2){		
         rx2Buff[Uart2lenth++] = UART2_RxBuffer[0];
         //判断是不是模块返回的应答包	
         if(rx2Buff[0]==0xEF&&rx2Buff[1]==0x01&&rx2Buff[6]==0X07){

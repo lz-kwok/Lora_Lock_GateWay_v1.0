@@ -125,20 +125,30 @@ static void SendCheck(u16 check)
 
 uint8_t PS_HandShake(uint32_t *PS_Addr)
 {
-	SendHead();
-	SendAddr();
-	System.Device.Usart2.WriteData(0x01);
-	System.Device.Usart2.WriteData(0x00);
-	System.Device.Usart2.WriteData(0x00);	
-	delay_ms(200);
-    
-	if(handshake_status == handshake_judging)//接收到数据
-	{		
+	if(handshake_status == handshake_pre){
+		SendHead();
+		SendAddr();
+		System.Device.Usart2.WriteData(0x01);
+		System.Device.Usart2.WriteData(0x00);
+		System.Device.Usart2.WriteData(0x00);	
+		delay_ms(500);
+	}else if(handshake_status == handshake_judging){		
         handshake_status = handshake_done;
         *PS_Addr=(rx2Buff[2]<<24) + (rx2Buff[3]<<16) + (rx2Buff[4]<<8) + (rx2Buff[5]);
-        
+
+		memset(rx2Buff,0x0,uart_rx_len);   //清空接收buf
+
+		LEDOn();
+		rt_thread_delay(100);
+		LEDOff();
+		rt_thread_delay(100);
+		LEDOn();
+		rt_thread_delay(10);
+		LEDOff();
+		
         return 0;
 	}
+	
 	return 1;		
 }
 
@@ -612,16 +622,10 @@ void thread_Fingerprint_Detect_entry(void* parameter)
 	uint8_t ensure;
 	static uint8_t det_flag = 0;
 	static uint8_t last_det_flag = 0;
+	
     while(PS_HandShake(&AS608_Addr)){
-        delay_ms(1000);
+        rt_thread_delay(100);
     }
-    LEDOn();
-    delay_ms(100);
-    LEDOff();
-    delay_ms(100);
-    LEDOn();
-    delay_ms(10);
-    LEDOff();
 
 	ensure = PS_ValidTempleteNum(&ValidN);  //读库指纹个数
 	ensure = PS_ReadSysPara(&AS608Para); 	//读参数 

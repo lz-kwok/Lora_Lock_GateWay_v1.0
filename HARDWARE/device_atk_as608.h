@@ -25,14 +25,13 @@ typedef struct
 	uint16_t mathscore;		//匹配得分
 }SearchResult;
 
-typedef enum
+enum ATK_AS_STA
 {
 	handshake_pre = 0,
 	handshake_judging,
 	handshake_done,
 	handle_data,
-
-}ATK_AS_STA;
+};
 
    
 
