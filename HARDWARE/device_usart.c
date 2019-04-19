@@ -206,8 +206,8 @@ void uart1_init(u32 Usart_BaudRate)
     
     
 #ifdef Printf2Uart1
-//    am_util_stdio_printf_init((am_util_stdio_print_char_t)
-//    USART1_SendString);  
+    am_util_stdio_printf_init((am_util_stdio_print_char_t)
+    uart1_SendString);  
 #endif
     
     System.Device.Usart1.WriteData   = uart1_SendByte; 
@@ -296,13 +296,104 @@ void uart2_init(u32 Usart_BaudRate)
       Error_Handler();
    
 #ifdef Printf2Uart2
-//       am_util_stdio_printf_init((am_util_stdio_print_char_t)
-//    USART2_SendString);  
+       am_util_stdio_printf_init((am_util_stdio_print_char_t)
+    uart2_SendString);  
 #endif
     
     System.Device.Usart2.WriteData = uart2_SendByte; 
     System.Device.Usart2.WriteString = uart2_SendString; 
 }
+
+
+void uart6_SendByte(uint8_t data)
+{
+    HAL_UART_Transmit(&Uart6Handle, &data, 1, 1000);
+}
+
+void uart6_SendNByte(uint8_t *data,uint16_t len)
+{
+    HAL_UART_Transmit(&Uart6Handle, data, len, 1000);
+}
+
+void uart6_SendString(uint8_t *s)
+{
+    while(*s != '\0')
+    {
+        HAL_UART_Transmit(&Uart6Handle, s, 1, 1000);
+        s++;
+    }
+}
+
+
+void uart6_init(u32 Usart_BaudRate)
+{	
+	//UART2 初始化设置
+	GPIO_InitTypeDef GPIO_InitStruct;
+   
+    /* Enable GPIO TX/RX clock */
+    USART6_TX_GPIO_CLK_ENABLE();
+    USART6_RX_GPIO_CLK_ENABLE();
+    
+    /* Enable USART2 clock */
+    USART6_CLK_ENABLE();
+     
+    /* UART TX GPIO pin configuration  */
+    GPIO_InitStruct.Pin       = USART6_TX_PIN;
+    GPIO_InitStruct.Mode      = GPIO_MODE_AF_PP;
+    GPIO_InitStruct.Pull      = GPIO_NOPULL;
+    GPIO_InitStruct.Speed     = GPIO_SPEED_FAST;
+    GPIO_InitStruct.Alternate = USART6_TX_AF;
+    
+    HAL_GPIO_Init(USART6_TX_GPIO_PORT, &GPIO_InitStruct);
+    
+    /* UART RX GPIO pin configuration  */
+    GPIO_InitStruct.Pin       = USART6_RX_PIN;
+    GPIO_InitStruct.Alternate = USART6_RX_AF;
+    
+    HAL_GPIO_Init( USART6_RX_GPIO_PORT, &GPIO_InitStruct );
+    
+    /*##-1- Configure the UART peripheral ######################################*/
+    
+    /* Put the USART peripheral in the Asynchronous mode (UART Mode) */
+    /* UART2 configured as follow:
+            - Word Length = 8 Bits
+            - Stop Bit = One Stop bit
+            - Parity = None
+            - BaudRate = 'Usart_BaudRate' baud
+            - Hardware flow control disabled (RTS and CTS signals) */
+    Uart6Handle.Instance        = USART6;
+    Uart6Handle.Init.BaudRate   = Usart_BaudRate;
+    Uart6Handle.Init.WordLength = UART_WORDLENGTH_8B;
+    Uart6Handle.Init.StopBits   = UART_STOPBITS_1;
+    Uart6Handle.Init.Parity     = UART_PARITY_NONE;
+    Uart6Handle.Init.HwFlowCtl  = UART_HWCONTROL_NONE;
+    Uart6Handle.Init.Mode       = UART_MODE_TX_RX;
+    
+    if ( HAL_UART_Init( &Uart6Handle ) != HAL_OK )
+    {
+      while( 1 );
+    }
+    
+    Uart6Handle.pRxBuffPtr = ( uint8_t * )UART6_RxBuffer;
+    Uart6Handle.RxXferSize = UART_BufferSize;
+    Uart6Handle.ErrorCode  = HAL_UART_ERROR_NONE;
+    
+    /* NVIC for USART1 */
+    HAL_NVIC_SetPriority(USART6_IRQn, 3, 4);
+    HAL_NVIC_EnableIRQ(USART6_IRQn);
+    
+    if(HAL_UART_Receive_IT(&Uart6Handle,UART6_RxBuffer,1)!=HAL_OK)
+      Error_Handler();
+   
+#ifdef Printf2Uart6
+       am_util_stdio_printf_init((am_util_stdio_print_char_t)
+    uart6_SendString);  
+#endif
+    
+    System.Device.Usart6.WriteData = uart6_SendByte; 
+    System.Device.Usart6.WriteString = uart6_SendString; 
+}
+
 
 
 /* 线程thread_uartDMA_receive_entry的入口函数 */

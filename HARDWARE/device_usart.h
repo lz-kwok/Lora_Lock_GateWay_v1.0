@@ -100,6 +100,7 @@ extern UART_HandleTypeDef UartHandle;
 /* Exported functions ------------------------------------------------------- */
 void uart1_init(uint32_t Usart_BaudRate);
 void uart2_init(uint32_t Usart_BaudRate);
+void uart6_init(u32 Usart_BaudRate);
 void Uart1000Routine(void);
 uint8_t *JudgeStr(uint16_t waittime);
 void thread_uartDMA_receive_entry(void* parameter);

@@ -30,6 +30,12 @@
 //#define USB_VCP
 //#define BME280_MODUOLE
 //#define SOC_RTC
+#define TurnOnPrintf
+
+#ifdef TurnOnPrintf
+#define Printf2Uart1
+#endif
+
 
 //0,不支持os
 //1,支持os
@@ -161,6 +167,7 @@ typedef __I uint8_t 	vuc8;
 #include "device_433.h"
 #include "device_crc.h"  
 #include "device_atk_as608.h"
+#include "device_printf.h"
 
 
 #ifdef SOC_RTC

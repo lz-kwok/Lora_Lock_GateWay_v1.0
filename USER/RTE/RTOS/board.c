@@ -65,6 +65,7 @@ void rt_hw_board_init()
 //    IIC1_Init();
 	uart1_init(9600);
     uart2_init(57600);
+	uart6_init(115200);
 //    SPI1_init(256);
 #ifdef USB_VCP
 	USB_Vcp_Init();
