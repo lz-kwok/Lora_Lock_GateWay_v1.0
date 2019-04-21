@@ -105,3 +105,4 @@
 ..\obj\convertcolor.o: ..\HARDWARE\device_433.h
 ..\obj\convertcolor.o: ..\HARDWARE\device_crc.h
 ..\obj\convertcolor.o: ..\HARDWARE\device_atk_as608.h
+..\obj\convertcolor.o: ..\HARDWARE\device_printf.h

@@ -105,3 +105,4 @@
 ..\obj\device_oled.o: ..\HARDWARE\device_433.h
 ..\obj\device_oled.o: ..\HARDWARE\device_crc.h
 ..\obj\device_oled.o: ..\HARDWARE\device_atk_as608.h
+..\obj\device_oled.o: ..\HARDWARE\device_printf.h

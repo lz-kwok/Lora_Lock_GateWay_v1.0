@@ -44,14 +44,14 @@
 #define USART2_RX_AF                     GPIO_AF7_USART2
 
 /* Definition for USART6 Pins */
-#define USART6_TX_PIN                    GPIO_PIN_6
-#define USART6_TX_GPIO_PORT              GPIOC
-#define USART6_RX_PIN                    GPIO_PIN_7
-#define USART6_RX_GPIO_PORT              GPIOC  
+#define USART6_TX_PIN                    GPIO_PIN_11
+#define USART6_TX_GPIO_PORT              GPIOA
+#define USART6_RX_PIN                    GPIO_PIN_12
+#define USART6_RX_GPIO_PORT              GPIOA  
 
 #define USART6_CLK_ENABLE()              __USART6_CLK_ENABLE();
-#define USART6_RX_GPIO_CLK_ENABLE()      __GPIOC_CLK_ENABLE()
-#define USART6_TX_GPIO_CLK_ENABLE()      __GPIOC_CLK_ENABLE()
+#define USART6_RX_GPIO_CLK_ENABLE()      __GPIOA_CLK_ENABLE()
+#define USART6_TX_GPIO_CLK_ENABLE()      __GPIOA_CLK_ENABLE()
 #define USART6_FORCE_RESET()             __USART6_FORCE_RESET()
 #define USART6_RELEASE_RESET()           __USART6_RELEASE_RESET()
 
@@ -101,6 +101,7 @@ extern UART_HandleTypeDef UartHandle;
 void uart1_init(uint32_t Usart_BaudRate);
 void uart2_init(uint32_t Usart_BaudRate);
 void uart6_init(u32 Usart_BaudRate);
+void uart6_SendByte(uint8_t data);
 void Uart1000Routine(void);
 uint8_t *JudgeStr(uint16_t waittime);
 void thread_uartDMA_receive_entry(void* parameter);

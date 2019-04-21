@@ -105,3 +105,4 @@
 ..\obj\font5_7.o: ..\HARDWARE\device_433.h
 ..\obj\font5_7.o: ..\HARDWARE\device_crc.h
 ..\obj\font5_7.o: ..\HARDWARE\device_atk_as608.h
+..\obj\font5_7.o: ..\HARDWARE\device_printf.h

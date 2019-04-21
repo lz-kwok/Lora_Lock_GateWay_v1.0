@@ -3,7 +3,7 @@
 * Function  : 串口设备初始化
 * V0.1    Guolz         2018/3/6       
 *******************************************************************************/
-#include "device_usart.h"
+#include "system.h"
 
 ////////////////////////////////////////////////////////////////////////////////// 	 
 //如果使用os,则包括下面的头文件即可.
@@ -31,7 +31,7 @@ static char handshake_status = handshake_pre;
 //V1.0修改说明 
 ////////////////////////////////////////////////////////////////////////////////// 	  
 //加入以下代码,支持printf函数,而不需要选择use MicroLIB	  
-//#define PUTCHAR_PROTOTYPE int fputc(int ch, FILE *f)	
+#define PUTCHAR_PROTOTYPE int fputc(int ch, FILE *f)	
 #if 1
 #pragma import(__use_no_semihosting)             
 //标准库需要的支持函数                 
@@ -47,9 +47,9 @@ void _sys_exit(int x)
 	x = x; 
 } 
 //重定义fputc函数 
-int fputc(int ch, FILE *f)
+PUTCHAR_PROTOTYPE
 { 	
-	System.Device.Usart6.WriteData(ch);      
+    HAL_UART_Transmit(&Uart6Handle, (uint8_t *)&ch, 1, 1000);
 	return ch;
 }
 #endif 
@@ -304,7 +304,6 @@ void uart2_init(u32 Usart_BaudRate)
     System.Device.Usart2.WriteString = uart2_SendString; 
 }
 
-
 void uart6_SendByte(uint8_t data)
 {
     HAL_UART_Transmit(&Uart6Handle, &data, 1, 1000);
@@ -451,14 +450,15 @@ void HAL_UART_RxCpltCallback(UART_HandleTypeDef *UartHandle)
 {  
     if(UartHandle->Instance==USART2){		
         rx2Buff[Uart2lenth++] = UART2_RxBuffer[0];
+        uart6_SendByte(UART2_RxBuffer[0]);
         //判断是不是模块返回的应答包	
         if(rx2Buff[0]==0xEF&&rx2Buff[1]==0x01&&rx2Buff[6]==0X07){
-			if(handshake_status == handshake_pre){
-                Uart2lenth = 0;
-                handshake_status = handshake_judging;
-			}else if(handshake_status == handshake_done){
-				handshake_status = handle_data;
-			}
+//			if(handshake_status == handshake_pre){
+//                handshake_status = handshake_judging;
+//                Uart2lenth = 0;
+//			}else if(handshake_status == handshake_done){
+//				handshake_status = handle_data;
+//			}
 
         }
     }

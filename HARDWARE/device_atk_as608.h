@@ -28,7 +28,7 @@ typedef struct
 enum ATK_AS_STA
 {
 	handshake_pre = 0,
-	handshake_judging,
+	handshake_judging = 1,
 	handshake_done,
 	handle_data,
 };

@@ -1,5 +1,4 @@
 ..\obj\device_usart.o: ..\HARDWARE\device_usart.c
-..\obj\device_usart.o: ..\HARDWARE\device_usart.h
 ..\obj\device_usart.o: ..\SYSTEM\system.h
 ..\obj\device_usart.o: E:\Programfiles\Keil\ARM\ARMCC\Bin\..\include\stdint.h
 ..\obj\device_usart.o: E:\Programfiles\Keil\ARM\ARMCC\Bin\..\include\stdbool.h
@@ -106,3 +105,4 @@
 ..\obj\device_usart.o: ..\HARDWARE\device_433.h
 ..\obj\device_usart.o: ..\HARDWARE\device_crc.h
 ..\obj\device_usart.o: ..\HARDWARE\device_atk_as608.h
+..\obj\device_usart.o: ..\HARDWARE\device_printf.h

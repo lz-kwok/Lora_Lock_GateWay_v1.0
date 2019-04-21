@@ -765,8 +765,9 @@ erwork --depend=..\obj\startup_stm32f401xe.d -o..\obj\startup_stm32f401xe.o -I.
 F4xx_DFP\2.11.0\Drivers\CMSIS\Device\ST\STM32F4xx\Include -IE:\Programfiles\Kei
 l\ARM\PACK\rt-thread\rtthread\2.1.1\include -IE:\Programfiles\Keil\ARM\CMSIS\In
 clude --predefine="__MICROLIB SETA 1" --predefine="__UVISION_VERSION SETA 523" 
---predefine="_RTE_ SETA 1" --predefine="STM32F401xE SETA 1" --list=..\obj\start
-up_stm32f401xe.lst ..\CORE\startup_stm32f401xe.s
+--predefine="_RTE_ SETA 1" --predefine="STM32F401xE SETA 1" --predefine="DEBUG_
+ENABLE_SEMIHOST SETA 1" --list=..\obj\startup_stm32f401xe.lst ..\CORE\startup_s
+tm32f401xe.s
 
 
 
@@ -1602,4 +1603,4 @@ Symbol: __main
       At line 194 in file ..\CORE\startup_stm32f401xe.s
 Comment: __main used once
 2 symbols
-420 symbols in table
+421 symbols in table

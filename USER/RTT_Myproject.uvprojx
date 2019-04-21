@@ -333,7 +333,7 @@
             <v6Rtti>0</v6Rtti>
             <VariousControls>
               <MiscControls></MiscControls>
-              <Define>USE_HAL_DRIVER,STM32F401xE,ARM_MATH_CM4</Define>
+              <Define>USE_HAL_DRIVER,STM32F401xE,ARM_MATH_CM4,DEBUG_ENABLE_SEMIHOST</Define>
               <Undefine></Undefine>
               <IncludePath>..\CORE;..\OBJ;..\USER;..\HALLIB\STM32F4xx_HAL_Driver\Inc;..\SYSTEM;..\HARDWARE;..\HARDWARE\device_BME280;..\HARDWARE\device_usb_vcp;..\HARDWARE\device_usb_vcp\STM32_USB_Device_Library\Class\CDC\Inc;..\HARDWARE\device_usb_vcp\STM32_USB_Device_Library\Core\Inc;..\ZlGGUI</IncludePath>
             </VariousControls>
@@ -351,7 +351,7 @@
             <uClangAs>0</uClangAs>
             <VariousControls>
               <MiscControls></MiscControls>
-              <Define></Define>
+              <Define>DEBUG_ENABLE_SEMIHOST</Define>
               <Undefine></Undefine>
               <IncludePath></IncludePath>
             </VariousControls>
@@ -703,6 +703,11 @@
               <FileName>device_atk_as608.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\HARDWARE\device_atk_as608.c</FilePath>
+            </File>
+            <File>
+              <FileName>device_printf.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\HARDWARE\device_printf.c</FilePath>
             </File>
           </Files>
         </Group>

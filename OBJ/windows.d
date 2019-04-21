@@ -105,3 +105,4 @@
 ..\obj\windows.o: ..\HARDWARE\device_433.h
 ..\obj\windows.o: ..\HARDWARE\device_crc.h
 ..\obj\windows.o: ..\HARDWARE\device_atk_as608.h
+..\obj\windows.o: ..\HARDWARE\device_printf.h

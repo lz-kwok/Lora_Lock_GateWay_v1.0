@@ -1,7 +1,7 @@
 #ifndef   _DEVICE_PRINTF_H_
 #define   _DEVICE_PRINTF_H_
 
-
+#include <stdint.h>
 
 
 //以下是串口函数接口

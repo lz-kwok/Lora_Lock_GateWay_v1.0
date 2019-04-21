@@ -123,34 +123,64 @@ static void SendCheck(u16 check)
 
 
 
-uint8_t PS_HandShake(uint32_t *PS_Addr)
+//uint8_t PS_HandShake(uint32_t *PS_Addr)
+//{
+//	if(handshake_status == handshake_pre){
+//		SendHead();
+//		SendAddr();
+//		System.Device.Usart2.WriteData(0x01);
+//		System.Device.Usart2.WriteData(0x00);
+//		System.Device.Usart2.WriteData(0x00);	
+//		delay_ms(500);
+//	}else if(handshake_status == handshake_judging){		
+//        handshake_status = handshake_done;
+//        *PS_Addr=(rx2Buff[2]<<24) + (rx2Buff[3]<<16) + (rx2Buff[4]<<8) + (rx2Buff[5]);
+
+//		memset(rx2Buff,0x0,uart_rx_len);   //清空接收buf
+
+//		LEDOn();
+//		rt_thread_delay(100);
+//		LEDOff();
+//		rt_thread_delay(100);
+//		LEDOn();
+//		rt_thread_delay(10);
+//		LEDOff();
+//		
+//        return 0;
+//	}
+//	
+//	return 1;		
+//}
+
+static uint32_t PS_HandShake(void)
 {
-	if(handshake_status == handshake_pre){
-		SendHead();
-		SendAddr();
-		System.Device.Usart2.WriteData(0x01);
-		System.Device.Usart2.WriteData(0x00);
-		System.Device.Usart2.WriteData(0x00);	
-		delay_ms(500);
-	}else if(handshake_status == handshake_judging){		
-        handshake_status = handshake_done;
-        *PS_Addr=(rx2Buff[2]<<24) + (rx2Buff[3]<<16) + (rx2Buff[4]<<8) + (rx2Buff[5]);
-
-		memset(rx2Buff,0x0,uart_rx_len);   //清空接收buf
-
-		LEDOn();
-		rt_thread_delay(100);
-		LEDOff();
-		rt_thread_delay(100);
-		LEDOn();
-		rt_thread_delay(10);
-		LEDOff();
-		
-        return 0;
-	}
+    uint32_t ret = 0xffffffff;
+handshake_done:
+    SendHead();
+    SendAddr();
+    System.Device.Usart2.WriteData(0x01);
+    System.Device.Usart2.WriteData(0x00);
+    System.Device.Usart2.WriteData(0x00);	
+	rt_thread_delay(500);
+    if(Uart2lenth >= 12){
+        Uart2lenth = 0;
+        ret = (rx2Buff[2]<<24) + (rx2Buff[3]<<16) + (rx2Buff[4]<<8) + (rx2Buff[5]);
+        memset(rx2Buff,0x0,uart_rx_len);   //清空接收buf
+        
+        LEDOn();
+        rt_thread_delay(100);
+        LEDOff();
+        rt_thread_delay(100);
+        LEDOn();
+        rt_thread_delay(100);
+        LEDOff();
+    }else{
+        goto handshake_done;
+    }
 	
-	return 1;		
+    return ret;
 }
+
 
 uint8_t PS_ValidTempleteNum(uint16_t *ValidN)
 {
@@ -164,21 +194,23 @@ uint8_t PS_ValidTempleteNum(uint16_t *ValidN)
 	Sendcmd(0x1d);
 	temp = 0x01+0x03+0x1d;
 	SendCheck(temp);
-    data=JudgeStr(2000);
-	
-    if(data){
-		ensure = data[9];
-		*ValidN = (data[10]<<8) +data[11];
-	}		
-	else
-		ensure=0xff;
-	
-	if(ensure==0x00){
-		printf("\r\n有效指纹个数=%d",(data[10]<<8)+data[11]);
-	}
-	else
-		printf("\r\n%s",EnsureMessage(ensure));
-	
+wait_rec_PS_ValidTempleteNum:    
+    rt_thread_delay(500);
+    if(Uart2lenth >= 14){
+        Uart2lenth = 0;
+        ensure = rx2Buff[9];
+        *ValidN = (rx2Buff[10]<<8) +rx2Buff[11];
+        if(ensure==0x00){
+            printf("\r\n有效指纹个数=%d个\r\n",(rx2Buff[10]<<8)+rx2Buff[11]);
+        }
+        else
+            printf("\r\n%s",EnsureMessage(ensure));
+        
+        memset(rx2Buff,0x0,uart_rx_len);   //清空接收buf
+    }else{
+        goto wait_rec_PS_ValidTempleteNum;
+    }
+    	
 	return ensure;
 }
 
@@ -194,29 +226,32 @@ uint8_t PS_ReadSysPara(SysPara *p)
 	Sendcmd(0x0F);
 	temp = 0x01+0x03+0x0F;
 	SendCheck(temp);
-	data=JudgeStr(1000);
-	if(data)
-	{
-		ensure = data[9];
-		p->PS_max = (data[14]<<8)+data[15];
-		p->PS_level = data[17];
-		p->PS_addr=(data[18]<<24)+(data[19]<<16)+(data[20]<<8)+data[21];
-		p->PS_size = data[23];
-		p->PS_N = data[25];
-	}		
-	else
-		ensure=0xff;
-	
-	if(ensure==0x00)
-	{
-		printf("\r\n模块最大指纹容量=%d",p->PS_max);
-		printf("\r\n对比等级=%d",p->PS_level);
-		printf("\r\n地址=%x",p->PS_addr);
-		printf("\r\n波特率=%d",p->PS_N*9600);
-	}
-	else 
-		printf("\r\n%s",EnsureMessage(ensure));
-	
+wait_rec_PS_ReadSysPara:
+    rt_thread_delay(500);
+    if(Uart2lenth >= 28){
+        Uart2lenth = 0;
+        ensure = rx2Buff[9];
+		p->PS_max = (rx2Buff[14]<<8)+rx2Buff[15];
+		p->PS_level = rx2Buff[17];
+		p->PS_addr=(rx2Buff[18]<<24)+(rx2Buff[19]<<16)+(rx2Buff[20]<<8)+rx2Buff[21];
+		p->PS_size = rx2Buff[23];
+		p->PS_N = rx2Buff[25];
+        	
+        if(ensure==0x00)
+        {
+            printf("\r\n模块最大指纹容量=%d",p->PS_max);
+            printf("\r\n对比等级=%d",p->PS_level);
+            printf("\r\n地址=%x",p->PS_addr);
+            printf("\r\n波特率=%d",p->PS_N*9600);
+        }
+        else 
+            printf("\r\n%s",EnsureMessage(ensure));
+        
+        memset(rx2Buff,0x0,uart_rx_len);   //清空接收buf
+    }else{
+        goto wait_rec_PS_ReadSysPara;
+    }
+
 	return ensure;
 }
 
@@ -249,12 +284,16 @@ uint8_t PS_GetImage(void)
 	Sendcmd(0x01);
  	temp = 0x01+0x03+0x01;
 	SendCheck(temp);
-	data=JudgeStr(2000);
-	if(data)
-		ensure=data[9];
-	else
-		ensure=0xff;
-	
+GetImage:   
+    rt_thread_delay(500);
+    if(Uart2lenth >= 12){
+        Uart2lenth = 0;
+        ensure = rx2Buff[9];
+        memset(rx2Buff,0x0,uart_rx_len);   //清空接收buf
+    }else{
+        goto GetImage;
+    }
+    
 	return ensure;
 }
 
@@ -276,11 +315,16 @@ uint8_t PS_GenChar(uint8_t BufferID)
 	System.Device.Usart2.WriteData(BufferID);
 	temp = 0x01+0x04+0x02+BufferID;
 	SendCheck(temp);
-	data=JudgeStr(2000);
-	if(data)
-		ensure=data[9];
-	else
-		ensure=0xff;
+
+GenChar:   
+    rt_thread_delay(500);
+    if(Uart2lenth >= 12){
+        Uart2lenth = 0;
+        ensure = rx2Buff[9];
+        memset(rx2Buff,0x0,uart_rx_len);   //清空接收buf
+    }else{
+        goto GenChar;
+    }
 	
 	return ensure;
 }
@@ -311,16 +355,19 @@ uint8_t PS_HighSpeedSearch(uint8_t BufferID,uint16_t StartPage,uint16_t PageNum,
 	+(StartPage>>8)+(uint8_t)StartPage
 	+(PageNum>>8)+(uint8_t)PageNum;
 	SendCheck(temp);
-	data=JudgeStr(2000);
- 	if(data)
-	{
-		ensure=data[9];
-		p->pageID 	=(data[10]<<8) +data[11];
-		p->mathscore=(data[12]<<8) +data[13];
-	}
-	else
-		ensure=0xff;
 	
+HighSpeedSearch:   
+    rt_thread_delay(500);
+    if(Uart2lenth >= 16){
+        Uart2lenth = 0;
+        ensure = rx2Buff[9];
+        p->pageID 	=(rx2Buff[10]<<8) +rx2Buff[11];
+		p->mathscore=(rx2Buff[12]<<8) +rx2Buff[13];
+        memset(rx2Buff,0x0,uart_rx_len);   //清空接收buf
+    }else{
+        goto HighSpeedSearch;
+    }
+    
 	return ensure;
 }
 
@@ -334,11 +381,13 @@ void press_FR(void)
 	ensure=PS_GetImage();
 	if(ensure==0x00)//获取图像成功 
 	{	
+        printf("获取图像成功 \r\n");
 		//打开蜂鸣器	
 		ensure=PS_GenChar(CharBuffer1);
 		if(ensure==0x00) //生成特征成功
 		{		
 //			BEEP=0;//关闭蜂鸣器	
+            printf("生成特征成功 \r\n");
 			ensure=PS_HighSpeedSearch(CharBuffer1,0,AS608Para.PS_max,&seach);
 			if(ensure==0x00)//搜索成功
 			{				
@@ -352,7 +401,7 @@ void press_FR(void)
 	  }
 
 	  //关闭蜂鸣器
-	 delay_ms(600);
+	 delay_ms(500);
 	}
 }
 
@@ -371,11 +420,16 @@ uint8_t PS_Match(void)
 	Sendcmd(0x03);
 	temp = 0x01+0x03+0x03;
 	SendCheck(temp);
-	data=JudgeStr(2000);
-	if(data)
-		ensure=data[9];
-	else
-		ensure=0xff;
+ju_Match:    
+    rt_thread_delay(500);
+    if(Uart2lenth >= 14){
+        Uart2lenth = 0;
+        ensure = rx2Buff[9];
+        memset(rx2Buff,0x0,uart_rx_len);   //清空接收buf
+    }else{
+        goto ju_Match;
+    }
+    
 	return ensure;
 }
 
@@ -394,11 +448,16 @@ uint8_t PS_RegModel(void)
 	Sendcmd(0x05);
 	temp = 0x01+0x03+0x05;
 	SendCheck(temp);
-	data=JudgeStr(2000);
-	if(data)
-		ensure=data[9];
-	else
-		ensure=0xff;
+RegModel:    
+    rt_thread_delay(500);
+    if(Uart2lenth >= 12){
+        Uart2lenth = 0;
+        ensure = rx2Buff[9];
+        memset(rx2Buff,0x0,uart_rx_len);   //清空接收buf
+    }else{
+        goto RegModel;
+    }
+
 	return ensure;		
 }
 
@@ -423,11 +482,20 @@ uint8_t PS_StoreChar(u8 BufferID,u16 PageID)
 	temp = 0x01+0x06+0x06+BufferID
 	+(PageID>>8)+(u8)PageID;
 	SendCheck(temp);
-	data=JudgeStr(2000);
-	if(data)
-		ensure=data[9];
-	else
-		ensure=0xff;
+StoreChar:    
+    rt_thread_delay(500);
+    if(Uart2lenth >= 12){
+        Uart2lenth = 0;
+        ensure = rx2Buff[9];
+        memset(rx2Buff,0x0,uart_rx_len);   //清空接收buf
+    }else{
+        goto StoreChar;
+    }
+//	data=JudgeStr(2000);
+//	if(data)
+//		ensure=data[9];
+//	else
+//		ensure=0xff;
 	return ensure;	
 }
 
@@ -509,6 +577,8 @@ void Add_FR(void)
 			case 4:	
 				printf("请输入储存ID,按Enter保存\r\n");
 				printf("0=< ID <=299\r\n");
+                printf("ID = 1\r\n");
+                ID = 1;
 //				do
 //					ID=GET_NUM();
 //				while(!(ID<AS608Para.PS_max));//输入ID必须小于模块容量最大的数值
@@ -622,11 +692,8 @@ void thread_Fingerprint_Detect_entry(void* parameter)
 	uint8_t ensure;
 	static uint8_t det_flag = 0;
 	static uint8_t last_det_flag = 0;
-	
-    while(PS_HandShake(&AS608_Addr)){
-        rt_thread_delay(100);
-    }
-
+    AS608_Addr = PS_HandShake();
+    printf("AS608_Addr = 0x%x\r\n",AS608_Addr);
 	ensure = PS_ValidTempleteNum(&ValidN);  //读库指纹个数
 	ensure = PS_ReadSysPara(&AS608Para); 	//读参数 
 	if(ensure == 0x00){
@@ -641,10 +708,11 @@ void thread_Fingerprint_Detect_entry(void* parameter)
 
 			if(det_flag == 1){
 				press_FR();
+                //Add_FR();
 			}
 		}
-
-
+        
+        
 
         rt_thread_delay(10);
 	}

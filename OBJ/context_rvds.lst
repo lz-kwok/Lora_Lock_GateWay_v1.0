@@ -344,9 +344,9 @@ RTE\_RTT_Myproject_GLZ -IE:\Programfiles\Keil\ARM\PACK\Keil\STM32F4xx_DFP\2.11.
 0\Drivers\CMSIS\Device\ST\STM32F4xx\Include -IE:\Programfiles\Keil\ARM\PACK\rt-
 thread\rtthread\2.1.1\include -IE:\Programfiles\Keil\ARM\CMSIS\Include --predef
 ine="__MICROLIB SETA 1" --predefine="__UVISION_VERSION SETA 523" --predefine="_
-RTE_ SETA 1" --predefine="STM32F401xE SETA 1" --list=..\obj\context_rvds.lst E:
-\Programfiles\Keil\ARM\PACK\rt-thread\rtthread\2.1.1\libcpu\arm\cortex-m4\conte
-xt_rvds.S
+RTE_ SETA 1" --predefine="STM32F401xE SETA 1" --predefine="DEBUG_ENABLE_SEMIHOS
+T SETA 1" --list=..\obj\context_rvds.lst E:\Programfiles\Keil\ARM\PACK\rt-threa
+d\rtthread\2.1.1\libcpu\arm\cortex-m4\context_rvds.S
 
 
 
@@ -605,4 +605,4 @@ Symbol: rt_thread_switch_interrupt_flag
 1\libcpu\arm\cortex-m4\context_rvds.S
 
 4 symbols
-358 symbols in table
+359 symbols in table

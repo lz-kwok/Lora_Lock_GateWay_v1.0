@@ -105,3 +105,4 @@
 ..\obj\lcmdrv.o: ..\HARDWARE\device_433.h
 ..\obj\lcmdrv.o: ..\HARDWARE\device_crc.h
 ..\obj\lcmdrv.o: ..\HARDWARE\device_atk_as608.h
+..\obj\lcmdrv.o: ..\HARDWARE\device_printf.h

@@ -105,6 +105,7 @@
 ..\obj\device_usb.o: ..\HARDWARE\device_433.h
 ..\obj\device_usb.o: ..\HARDWARE\device_crc.h
 ..\obj\device_usb.o: ..\HARDWARE\device_atk_as608.h
+..\obj\device_usb.o: ..\HARDWARE\device_printf.h
 ..\obj\device_usb.o: ..\HARDWARE\device_usb_vcp\STM32_USB_Device_Library\Core\Inc\usbd_core.h
 ..\obj\device_usb.o: ..\HARDWARE\device_usb_vcp\usbd_conf.h
 ..\obj\device_usb.o: ..\HARDWARE\device_usb_vcp\STM32_USB_Device_Library\Core\Inc\usbd_def.h

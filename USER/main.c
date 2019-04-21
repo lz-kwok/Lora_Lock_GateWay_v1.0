@@ -10,11 +10,7 @@ void rt_hw_console_output(const char *str)
 	
 	rt_enter_critical();
 
-	while(*str!='\0')
-	{
-		System.Device.Usart6.WriteString((uint8_t *)str);
-		*str++;
-	}
+//	System.Device.Usart6.WriteString((uint8_t *)str);
 
 	rt_exit_critical();
 }

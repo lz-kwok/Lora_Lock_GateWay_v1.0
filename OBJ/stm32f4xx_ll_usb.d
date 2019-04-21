@@ -105,3 +105,4 @@
 ..\obj\stm32f4xx_ll_usb.o: ..\HARDWARE\device_433.h
 ..\obj\stm32f4xx_ll_usb.o: ..\HARDWARE\device_crc.h
 ..\obj\stm32f4xx_ll_usb.o: ..\HARDWARE\device_atk_as608.h
+..\obj\stm32f4xx_ll_usb.o: ..\HARDWARE\device_printf.h

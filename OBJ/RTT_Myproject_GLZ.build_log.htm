@@ -21,18 +21,37 @@ Target DLL:      STLink\ST-LINKIII-KEIL_SWO.dll V2.0.18.0
 Dialog DLL:      TCM.DLL V1.27.0.0
  
 <h2>Project:</h2>
-G:\04  MyDesign\22  gateway\Lora_Lock_GateWay_v1.1\USER\RTT_Myproject.uvprojx
-Project File Date:  04/18/2019
+G:\04  MyDesign\22  gateway\Lora_Lock_GateWay_v1.0\Lora_Lock_GateWay_v1.0\USER\RTT_Myproject.uvprojx
+Project File Date:  04/20/2019
 
 <h2>Output:</h2>
 *** Using Compiler 'V5.06 update 4 (build 422)', folder: 'E:\Programfiles\Keil\ARM\ARMCC\Bin'
 Build target 'RTT_Myproject_GLZ'
-compiling device_usart.c...
+compiling device_atk_as608.c...
+..\HARDWARE\device_atk_as608.c(189): warning:  #177-D: variable "data"  was declared but never referenced
+  	uint8_t *data;
+..\HARDWARE\device_atk_as608.c(221): warning:  #177-D: variable "data"  was declared but never referenced
+  	uint8_t  *data;
+..\HARDWARE\device_atk_as608.c(279): warning:  #177-D: variable "data"  was declared but never referenced
+  	uint8_t  *data;
+..\HARDWARE\device_atk_as608.c(309): warning:  #177-D: variable "data"  was declared but never referenced
+  	uint8_t *data;
+..\HARDWARE\device_atk_as608.c(343): warning:  #177-D: variable "data"  was declared but never referenced
+  	uint8_t *data;
+..\HARDWARE\device_atk_as608.c(380): warning:  #177-D: variable "str"  was declared but never referenced
+  	char *str;
+..\HARDWARE\device_atk_as608.c(415): warning:  #177-D: variable "data"  was declared but never referenced
+  	uint8_t *data;
+..\HARDWARE\device_atk_as608.c(443): warning:  #177-D: variable "data"  was declared but never referenced
+  	uint8_t *data;
+..\HARDWARE\device_atk_as608.c(473): warning:  #177-D: variable "data"  was declared but never referenced
+  	uint8_t *data;
+..\HARDWARE\device_atk_as608.c: 9 warnings, 0 errors
 linking...
-Program Size: Code=25972 RO-data=764 RW-data=444 ZI-data=5396  
+Program Size: Code=26364 RO-data=764 RW-data=448 ZI-data=5400  
 FromELF: creating hex file...
 After Build - User command #1: E:\Programfiles\Keil\ARM\ARMCC\bin\fromelf.exe  --bin -o ../OBJ/RTT_Myproject_GLZ.bin ../OBJ/RTT_Myproject_GLZ.axf
-"..\OBJ\RTT_Myproject_GLZ.axf" - 0 Error(s), 0 Warning(s).
+"..\OBJ\RTT_Myproject_GLZ.axf" - 0 Error(s), 9 Warning(s).
 
 <h2>Software Packages used:</h2>
 
@@ -51,22 +70,22 @@ Package Vendor: rt-thread
 <h2>Collection of Component Files used:</h2>
 
    * Component: rt-thread.RT-Thread::RTOS:kernel:2.1.2
-      Source file:   libcpu\arm\cortex-m4\cpuport.c
       Source file:   src\kservice.c
-      Source file:   bsp\board.c
-      Source file:   src\components.c
-      Source file:   src\device.c
-      Source file:   src\thread.c
-      Source file:   src\irq.c
-      Source file:   src\timer.c
-      Include file:  bsp\rtconfig.h
-      Source file:   src\object.c
-      Source file:   libcpu\arm\cortex-m4\context_rvds.S
       Source file:   src\mem.c
-      Source file:   src\clock.c
-      Source file:   src\ipc.c
+      Source file:   src\device.c
+      Include file:  bsp\rtconfig.h
+      Source file:   src\components.c
+      Source file:   src\irq.c
       Source file:   src\scheduler.c
+      Source file:   src\thread.c
+      Source file:   src\object.c
+      Source file:   src\timer.c
+      Source file:   libcpu\arm\cortex-m4\cpuport.c
+      Source file:   libcpu\arm\cortex-m4\context_rvds.S
       Source file:   src\idle.c
+      Source file:   src\ipc.c
+      Source file:   src\clock.c
+      Source file:   bsp\board.c
 Build Time Elapsed:  00:00:02
 </pre>
 </body>

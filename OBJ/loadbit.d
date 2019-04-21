@@ -105,3 +105,4 @@
 ..\obj\loadbit.o: ..\HARDWARE\device_433.h
 ..\obj\loadbit.o: ..\HARDWARE\device_crc.h
 ..\obj\loadbit.o: ..\HARDWARE\device_atk_as608.h
+..\obj\loadbit.o: ..\HARDWARE\device_printf.h

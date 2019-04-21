@@ -54,6 +54,7 @@
 "..\obj\device_433.o"
 "..\obj\device_crc.o"
 "..\obj\device_atk_as608.o"
+"..\obj\device_printf.o"
 "..\obj\usbd_cdc_if.o"
 "..\obj\usbd_conf.o"
 "..\obj\usbd_desc.o"
